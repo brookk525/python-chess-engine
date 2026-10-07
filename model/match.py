@@ -78,7 +78,7 @@ class Match:
         self._state = MatchState.RUNNING
 
     def move(self, fig: Figure, x: int, y: int) -> bool:
-        if fig is None:
+        if fig is None or fig not in self._board.get_figures():
             return False   
         if self.get_match_state() == MatchState.RUNNING and fig.get_color() == self.get_turn():
             if isinstance(fig, King) and (x == 2 or x == 6) and fig.get_move_count() == 0:
