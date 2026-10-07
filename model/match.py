@@ -88,6 +88,10 @@ class Match:
                     return True
                 else: return False
             if fig.can_move(x, y, self._board):
+                target = self._board.get_figure_at(x, y)
+                if isinstance(target, King):
+                    return False
+
                 ghost = self._board._clone_board()
                 ghost_fig = ghost.get_figure_at(fig.get_x(), fig.get_y())
                 ghost.move(ghost_fig, x, y)
