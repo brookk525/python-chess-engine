@@ -76,3 +76,28 @@ def test_promote_replaces_pawn_and_returns_to_running_and_changes_turn():
 
     # El peón original ya no debe existir en el tablero
     assert pawn not in board.get_figures()
+
+
+def test_promote_with_invalid_type_keeps_pawn_waiting():
+    m = Match(1, "p1", "p2")
+    m.start()
+    board = m._board
+
+    pawn = board.get_figure_at(0, 1)
+    black_pawn = board.get_figure_at(0, 6)
+    black_back = board.get_figure_at(0, 7)
+
+    board._remove_figure(black_pawn)
+    board._remove_figure(black_back)
+    board.move(pawn, 0, 6)
+
+    ok = m.move(pawn, 0, 7)
+
+    assert ok is True
+    assert m.get_match_state() == MatchState.WAITING_PROMOTION
+
+    m.promote(None)
+
+    assert m.get_match_state() == MatchState.WAITING_PROMOTION
+    assert m.get_turn() == Color.WHITE
+    assert board.get_figure_at(0, 7) is pawn

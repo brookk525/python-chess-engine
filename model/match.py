@@ -243,7 +243,7 @@ class Match:
         return None  
 
     def promote(self, desired_type: PromotingType):
-        if self._pawn_to_promote is None:
+        if self._pawn_to_promote is None or not isinstance(desired_type, PromotingType):
             return
 
         promoting_pawn = self._pawn_to_promote
@@ -261,7 +261,7 @@ class Match:
         elif desired_type == PromotingType.BISHOP:
             self._board._add_figure(Bishop(x, y, color))
         
-        else:
+        elif desired_type == PromotingType.ROOK:
             self._board._add_figure(Rook(x, y, color))
         
         self._pawn_to_promote = None
