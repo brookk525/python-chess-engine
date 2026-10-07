@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lista de usuarios</title>
+    <link rel="stylesheet" href="/frontend/lista.css" />
+</head>
+
+<body>
+    <main class="wrap">
+        <header class="top">
+            <h1>Usuarios</h1>
+            <div class="top-right">
+                <a class="link" href="/frontend/usermenu.html">Volver</a>
+                <a class="link" href="/frontend/landingPage.html">Salir</a>
+            </div>
+        </header>
+
+        <section class="card">
+            <div class="actions">
+                <button id="loadBtn" type="button">Cargar usuarios</button>
+                <button id="clearViewBtn" type="button" class="ghost">Limpiar vista</button>
+            </div>
+
+            <p id="status" class="status"></p>
+
+            <ul id="usersList" class="list"></ul>
+        </section>
+    </main>
+
+    <script src="/frontend/lista.js"></script>
+</body>
+
+</html>
