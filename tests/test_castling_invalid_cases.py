@@ -105,3 +105,27 @@ def test_castling_fails_when_square_king_passes_through_is_attacked():
     assert (rook.get_x(), rook.get_y()) == rook_before
     assert board.get_figure_at(4, 0) is king
     assert board.get_figure_at(7, 0) is rook
+
+
+def test_castling_fails_when_rook_square_contains_another_ally_piece():
+    m = Match(1, "p1", "p2")
+    m.start()
+    board = m._board
+
+    king = board.get_figure_at(4, 0)
+    knight = board.get_figure_at(6, 0)
+
+    # Eliminamos el resto de piezas y colocamos el caballo donde debería estar
+    # la torre del enroque corto.
+    _keep_only(board, {king, knight})
+    board.move(knight, 7, 0)
+
+    king_before = (king.get_x(), king.get_y())
+    knight_before = (knight.get_x(), knight.get_y())
+
+    ok = m.move(king, 6, 0)
+
+    assert ok is False
+    assert m.get_turn() == Color.WHITE
+    assert (king.get_x(), king.get_y()) == king_before
+    assert (knight.get_x(), knight.get_y()) == knight_before

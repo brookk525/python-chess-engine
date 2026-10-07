@@ -150,7 +150,7 @@ class Match:
             right_rook = self._board.get_figure_at(7, rky)
 
             if side == Side.LEFT:
-                if left_rook is not None and king is not None and not left_rook.is_enemy(king):
+                if isinstance(left_rook, Rook) and isinstance(king, King) and not left_rook.is_enemy(king):
                     if left_rook.get_move_count() == 0 and king.get_move_count() == 0:
                         for i in range(1, 4):
                             x = king.get_x() - i 
@@ -165,7 +165,7 @@ class Match:
                         return True
                 
             if side == Side.RIGHT:
-                if right_rook is not None and king is not None and not right_rook.is_enemy(king):
+                if isinstance(right_rook, Rook) and isinstance(king, King) and not right_rook.is_enemy(king):
                     if right_rook.get_move_count() == 0 and king.get_move_count() == 0:
                         for i in range(1, 3):
                             x = king.get_x() + i 
