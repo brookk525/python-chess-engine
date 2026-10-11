@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from .board import Board
 
 if TYPE_CHECKING:
-    from .figure import Figure
+    from .figures.figure import Figure
 
 class MutableBoard(Board):
     def __init__(self):

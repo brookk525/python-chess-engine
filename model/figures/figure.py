@@ -3,10 +3,10 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
-from .enums import Color
+from ..enums import Color
 
 if TYPE_CHECKING:
-    from .board import Board
+    from ..board import Board
 
 class Figure(ABC):
     def __init__(self, x: int, y: int, color: Color):

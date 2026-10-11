@@ -1,7 +1,7 @@
 from model.match import Match
 from model.enums import Color
-from model.king import King
-from model.queen import Queen
+from model.figures.king import King
+from model.figures.queen import Queen
 
 
 def _clear_board(board):

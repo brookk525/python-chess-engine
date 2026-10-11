@@ -1,7 +1,7 @@
 from model.enums import Color
-from model.king import King
+from model.figures.king import King
 from model.match import Match
-from model.rook import Rook
+from model.figures.rook import Rook
 
 
 def test_move_cannot_capture_enemy_king():

@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from .enums import MatchState, PromotingType
-from .figure import Figure
-from .match import Match
+from model.enums import MatchState, PromotingType
+from model.figures.figure import Figure
+from model.match import Match
 
 class MatchService:
     def __init__(self):

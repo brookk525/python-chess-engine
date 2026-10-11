@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from .figure import Figure
+    from .figures.figure import Figure
 
 class Board:
     def __init__(self):
@@ -21,4 +21,3 @@ class Board:
     def get_figures(self) -> list[Figure]:
         figures: list[Figure] = self._figures
         return figures.copy()
-

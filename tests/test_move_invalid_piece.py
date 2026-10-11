@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from model.match import Match
 from model.enums import Color
-from model.rook import Rook
+from model.figures.rook import Rook
 
 
 @dataclass(frozen=True)

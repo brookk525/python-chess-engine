@@ -3,14 +3,14 @@ from __future__ import annotations
 from .enums import Color, Side, MatchState, PromotingType
 from .board import Board
 from .mutable_board import MutableBoard
-from .figure import Figure
+from .figures.figure import Figure
 
-from .pawn import Pawn
-from .rook import Rook
-from .knight import Knight
-from .bishop import Bishop
-from .queen import Queen
-from .king import King
+from .figures.pawn import Pawn
+from .figures.rook import Rook
+from .figures.knight import Knight
+from .figures.bishop import Bishop
+from .figures.queen import Queen
+from .figures.king import King
 
 class Match:
     def __init__(self, match_id: int, player1_name: str, player2_name: str):
