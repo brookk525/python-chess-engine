@@ -58,3 +58,22 @@ def test_move_with_piece_not_on_board_fails_without_changing_state():
     assert ok is False
     assert m.get_turn() == turn_before
     assert _snapshot_board(board) == board_before
+
+
+def test_move_with_piece_not_on_board_and_free_path_fails_without_exception():
+    m = Match(1, "p1", "p2")
+    m.start()
+
+    board = m._board
+    turn_before = m.get_turn()
+    board_before = _snapshot_board(board)
+
+    # Esta torre no pertenece al tablero, pero desde su posición inventada
+    # tendría un movimiento válido. Match debe rechazarla sin lanzar errores.
+    rogue = Rook(0, 2, Color.WHITE)
+
+    ok = m.move(rogue, 0, 3)
+
+    assert ok is False
+    assert m.get_turn() == turn_before
+    assert _snapshot_board(board) == board_before

@@ -78,7 +78,7 @@ class Match:
         self._state = MatchState.RUNNING
 
     def move(self, fig: Figure, x: int, y: int) -> bool:
-        if fig is None:
+        if fig is None or fig not in self._board.get_figures():
             return False   
         if self.get_match_state() == MatchState.RUNNING and fig.get_color() == self.get_turn():
             if isinstance(fig, King) and (x == 2 or x == 6) and fig.get_move_count() == 0:
@@ -88,6 +88,10 @@ class Match:
                     return True
                 else: return False
             if fig.can_move(x, y, self._board):
+                target = self._board.get_figure_at(x, y)
+                if isinstance(target, King):
+                    return False
+
                 ghost = self._board._clone_board()
                 ghost_fig = ghost.get_figure_at(fig.get_x(), fig.get_y())
                 ghost.move(ghost_fig, x, y)
@@ -150,7 +154,7 @@ class Match:
             right_rook = self._board.get_figure_at(7, rky)
 
             if side == Side.LEFT:
-                if left_rook is not None and king is not None and not left_rook.is_enemy(king):
+                if isinstance(left_rook, Rook) and isinstance(king, King) and not left_rook.is_enemy(king):
                     if left_rook.get_move_count() == 0 and king.get_move_count() == 0:
                         for i in range(1, 4):
                             x = king.get_x() - i 
@@ -165,7 +169,7 @@ class Match:
                         return True
                 
             if side == Side.RIGHT:
-                if right_rook is not None and king is not None and not right_rook.is_enemy(king):
+                if isinstance(right_rook, Rook) and isinstance(king, King) and not right_rook.is_enemy(king):
                     if right_rook.get_move_count() == 0 and king.get_move_count() == 0:
                         for i in range(1, 3):
                             x = king.get_x() + i 
@@ -239,7 +243,7 @@ class Match:
         return None  
 
     def promote(self, desired_type: PromotingType):
-        if self._pawn_to_promote is None:
+        if self._pawn_to_promote is None or not isinstance(desired_type, PromotingType):
             return
 
         promoting_pawn = self._pawn_to_promote
@@ -257,7 +261,7 @@ class Match:
         elif desired_type == PromotingType.BISHOP:
             self._board._add_figure(Bishop(x, y, color))
         
-        else:
+        elif desired_type == PromotingType.ROOK:
             self._board._add_figure(Rook(x, y, color))
         
         self._pawn_to_promote = None
