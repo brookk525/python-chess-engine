@@ -1,4 +1,4 @@
-from model.match_service import MatchService
+from services.match_service import MatchService
 
 
 def test_match_service_create_get_delete():

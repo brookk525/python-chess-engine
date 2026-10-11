@@ -1,6 +1,6 @@
 from model.match import Match
 from model.enums import Color
-from model.rook import Rook
+from model.figures.rook import Rook
 
 
 def _keep_only(board, keep):

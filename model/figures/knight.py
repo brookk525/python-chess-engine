@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from .enums import Color
+from ..enums import Color
 from .figure import Figure
 
 if TYPE_CHECKING:
-    from .board import Board
+    from ..board import Board
 
 class Knight(Figure):
     def __init__(self, x: int, y: int, color: Color):

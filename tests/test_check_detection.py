@@ -1,8 +1,8 @@
 from model.match import Match
 from model.enums import Color
-from model.king import King
-from model.rook import Rook
-from model.pawn import Pawn
+from model.figures.king import King
+from model.figures.rook import Rook
+from model.figures.pawn import Pawn
 
 
 def test_is_in_check_true_when_rook_attacks_king_on_open_file():

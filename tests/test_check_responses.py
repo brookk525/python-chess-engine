@@ -1,8 +1,8 @@
 from model.match import Match
 from model.enums import Color
-from model.king import King
-from model.rook import Rook
-from model.bishop import Bishop
+from model.figures.king import King
+from model.figures.rook import Rook
+from model.figures.bishop import Bishop
 
 
 def _clear_board(board):

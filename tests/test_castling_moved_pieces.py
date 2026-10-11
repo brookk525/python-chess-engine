@@ -1,6 +1,6 @@
 from model.match import Match
 from model.enums import Color
-from model.pawn import Pawn
+from model.figures.pawn import Pawn
 
 
 def _keep_only(board, keep):

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from model.match_service import MatchService
+from services.match_service import MatchService
 from model.enums import Color, MatchState, PromotingType
 
 
