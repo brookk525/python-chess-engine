@@ -1,86 +1,88 @@
-# ♟️ Motor de ajedrez en Python
+# ♟️ Chess Engine in Python
 
-Motor de reglas de ajedrez desarrollado desde cero en Python, centrado en el diseño orientado a objetos, la implementación de algoritmos y la validación del comportamiento mediante tests automatizados.
+English | [Español](README.es.md)
 
-El proyecto no utiliza motores de ajedrez externos como `python-chess`. Las piezas, movimientos y reglas implementadas forman parte de una solución propia.
+A chess rules engine developed from scratch in Python, focused on object-oriented design, algorithm implementation, and behavior validation through automated tests.
 
-## 🎯 Sobre el proyecto
+The project does not use external chess engines such as `python-chess`. The pieces, movements, and implemented rules are part of an original solution.
 
-Este motor nació como un proyecto académico durante mi primer año de formación en Desarrollo de Aplicaciones Web, cuando llevaba aproximadamente seis meses aprendiendo a programar.
+## 🎯 About the project
 
-El objetivo principal era trasladar las reglas del ajedrez a un modelo orientado a objetos, dividiendo responsabilidades entre piezas, tablero, partida y servicio de partidas.
+This engine began as an academic project during my first year studying Web Application Development, when I had been learning to program for approximately six months.
 
-La primera versión del motor se desarrolló a lo largo de aproximadamente tres semanas, compaginando el proyecto con el resto de las clases. Una parte importante del proceso consistió en estudiar el tablero sobre papel, analizar posiciones y encontrar patrones que después pudieran convertirse en algoritmos.
+The main goal was to translate the rules of chess into an object-oriented model, dividing responsibilities among pieces, the board, the match, and the match service.
 
-Posteriormente, el proyecto fue revisado para reforzar casos límite, ampliar la cobertura de tests y preparar una versión limpia para portfolio.
+The first version of the engine was developed over approximately three weeks while working on the project alongside my other classes. An important part of the process involved studying the board on paper, analyzing positions, and finding patterns that could later be converted into algorithms.
 
-## ✨ Características implementadas
+The project was later reviewed to strengthen edge cases, expand test coverage, and prepare a clean version for my portfolio.
 
-- Configuración inicial completa con 32 piezas.
-- Movimientos específicos para cada tipo de pieza.
-- Control de turnos entre blancas y negras.
-- Captura de piezas enemigas.
-- Bloqueo de trayectorias para torre, alfil y reina.
-- Movimiento en L del caballo.
-- Avance simple y doble paso inicial de los peones.
-- Captura diagonal de peones.
-- Prevención de movimientos fuera del tablero.
-- Prevención de movimientos que dejan al propio rey en jaque.
-- Detección de jaque.
-- Detección de jaque mate.
-- Detección de ahogado.
-- Enroque corto y largo.
-- Validación de las casillas atravesadas durante el enroque.
-- Promoción a reina, torre, alfil o caballo.
-- Clonación del tablero para simular movimientos sin alterar la partida real.
-- Servicio para crear, consultar, iniciar, mover y eliminar partidas.
+## ✨ Implemented features
 
-## 🧠 Algoritmos y resolución de problemas
+- Complete initial setup with 32 pieces.
+- Specific movements for each type of piece.
+- Turn control between White and Black.
+- Capture of enemy pieces.
+- Path blocking for rooks, bishops, and queens.
+- L-shaped knight movement.
+- Single-square movement and the initial two-square move for pawns.
+- Diagonal pawn captures.
+- Prevention of moves outside the board.
+- Prevention of moves that leave the player's own king in check.
+- Check detection.
+- Checkmate detection.
+- Stalemate detection.
+- Kingside and queenside castling.
+- Validation of the squares crossed during castling.
+- Promotion to queen, rook, bishop, or knight.
+- Board cloning to simulate moves without modifying the real match.
+- A service for creating, retrieving, starting, playing, and deleting matches.
 
-### Movimientos direccionales
+## 🧠 Algorithms and problem-solving
 
-La torre, el alfil y la reina comparten un algoritmo de desplazamiento direccional.
+### Directional movement
 
-A partir de una dirección `(dx, dy)`, el motor recorre progresivamente las casillas hasta encontrar uno de estos casos:
+The rook, bishop, and queen share a directional movement algorithm.
 
-1. El movimiento sale del tablero.
-2. Aparece una pieza aliada.
-3. Aparece una pieza enemiga que puede capturarse.
-4. El camino permanece libre.
+From a direction `(dx, dy)`, the engine progressively checks the squares until one of the following cases occurs:
 
-Esto permite reutilizar la misma lógica para movimientos horizontales, verticales y diagonales.
+1. The move goes outside the board.
+2. A friendly piece is found.
+3. An enemy piece that can be captured is found.
+4. The path remains clear.
 
-### Simulación de movimientos
+This makes it possible to reuse the same logic for horizontal, vertical, and diagonal movements.
 
-Antes de aceptar un movimiento, el motor clona el tablero y realiza la jugada sobre la copia.
+### Move simulation
 
-Después comprueba si el rey del jugador quedaría amenazado. Si el movimiento deja al propio rey en jaque, la jugada se rechaza y el tablero real permanece intacto.
+Before accepting a move, the engine clones the board and performs the move on the copy.
 
-Esta misma estrategia se utiliza para estudiar posibles respuestas ante un jaque y determinar si existe jaque mate o ahogado.
+It then checks whether the player's king would be under threat. If the move leaves the player's own king in check, the move is rejected and the real board remains unchanged.
 
-### Control del enroque
+The same strategy is used to analyze possible responses to check and determine whether a position is checkmate or stalemate.
 
-Para permitir un enroque se comprueba que:
+### Castling validation
 
-- El rey y la torre sean piezas del tipo correcto.
-- Ambos pertenezcan al mismo jugador.
-- Ninguna de las dos piezas se haya movido.
-- No existan piezas entre el rey y la torre.
-- El rey no se encuentre actualmente en jaque.
-- El rey no atraviese ni termine en una casilla amenazada.
+To allow castling, the engine checks that:
 
-### Estados de promoción
+- The king and rook are pieces of the correct types.
+- Both belong to the same player.
+- Neither piece has moved.
+- There are no pieces between the king and the rook.
+- The king is not currently in check.
+- The king does not cross or finish on an attacked square.
 
-Cuando un peón alcanza la última fila, la partida entra en el estado `WAITING_PROMOTION`.
+### Promotion states
 
-El turno no cambia hasta que el jugador selecciona una promoción válida entre:
+When a pawn reaches the final rank, the match enters the `WAITING_PROMOTION` state.
 
-- Reina.
-- Torre.
-- Alfil.
-- Caballo.
+The turn does not change until the player selects a valid promotion among:
 
-## 🏗️ Arquitectura y orientación a objetos
+- Queen.
+- Rook.
+- Bishop.
+- Knight.
+
+## 🏗️ Architecture and object-oriented design
 
 ```mermaid
 classDiagram
@@ -151,25 +153,25 @@ classDiagram
     }
 ```
 
-### Responsabilidades principales
+### Main responsibilities
 
-- `Figure`: clase abstracta común para todas las piezas.
-- `Pawn`, `Rook`, `Knight`, `Bishop`, `Queen` y `King`: implementan sus movimientos específicos.
-- `Board`: ofrece acceso de lectura a las piezas y posiciones.
-- `MutableBoard`: permite modificar y clonar el tablero.
-- `Match`: controla reglas, turnos, estados y movimientos.
-- `MatchService`: administra múltiples partidas en memoria mediante identificadores.
-- `Enums`: representa colores, estados, lados del enroque y tipos de promoción.
+- `Figure`: common abstract class for all pieces.
+- `Pawn`, `Rook`, `Knight`, `Bishop`, `Queen`, and `King`: implement their specific movements.
+- `Board`: provides read access to pieces and positions.
+- `MutableBoard`: allows the board to be modified and cloned.
+- `Match`: controls rules, turns, states, and movements.
+- `MatchService`: manages multiple in-memory matches through identifiers.
+- `Enums`: represents colors, states, castling sides, and promotion types.
 
-### 🧩 Capa de servicio
+### 🧩 Service layer
 
-El proyecto incluye un `MatchService` encargado de gestionar el ciclo de vida de varias partidas: creación, consulta, inicio, movimientos, promociones y eliminación.
+The project includes a `MatchService` responsible for managing the lifecycle of multiple matches: creation, retrieval, starting, movements, promotions, and deletion.
 
-Este servicio no representa una API web ni depende de ningún framework. Actúa como una capa intermedia entre el motor de ajedrez y cualquier posible interfaz que quiera utilizarlo, como una aplicación de consola, una API REST o una interfaz gráfica.
+This service does not represent a web API and does not depend on any framework. It acts as an intermediate layer between the chess engine and any interface that may use it, such as a console application, a REST API, or a graphical interface.
 
-Actualmente, las partidas se almacenan únicamente en memoria. El proyecto no incluye persistencia, autenticación ni servidor HTTP, ya que su objetivo es mostrar la implementación del motor y la separación de responsabilidades.
+Matches are currently stored only in memory. The project does not include persistence, authentication, or an HTTP server because its purpose is to demonstrate the engine implementation and the separation of responsibilities.
 
-## 📂 Estructura del proyecto
+## 📂 Project structure
 
 ```text
 python-chess-engine/
@@ -196,138 +198,139 @@ python-chess-engine/
 ├── LICENSE
 ├── pyproject.toml
 ├── requirements-dev.txt
+├── README.es.md
 └── README.md
 ```
 
 ## 🧪 Tests
 
-El proyecto cuenta actualmente con 61 tests automatizados.
+The project currently includes 61 automated tests.
 
-La suite cubre, entre otros casos:
+Among other cases, the test suite covers:
 
-- Colocación inicial de las piezas.
-- Movimiento de cada tipo de pieza.
-- Bloqueos y capturas.
-- Alternancia de turnos.
-- Movimientos inválidos.
-- Intentos de mover piezas ajenas al tablero.
-- Autojaque.
-- Jaque y respuestas posibles.
-- Jaque mate.
-- Ahogado.
-- Enroque válido e inválido.
-- Promoción válida e inválida.
-- Movimientos y capturas de peones blancos y negros.
-- Operaciones de `MatchService`.
+- Initial piece placement.
+- Movement of each type of piece.
+- Blocked paths and captures.
+- Turn alternation.
+- Invalid moves.
+- Attempts to move pieces that do not belong to the board.
+- Self-check.
+- Check and possible responses.
+- Checkmate.
+- Stalemate.
+- Valid and invalid castling.
+- Valid and invalid promotion.
+- Movements and captures of White and Black pawns.
+- `MatchService` operations.
 
-## 🚀 Instalación
+## 🚀 Installation
 
-### Requisitos
+### Requirements
 
-- Python 3.13. Entorno verificado con Python 3.13.7.
+- Python 3.13. Environment verified with Python 3.13.7.
 - Git.
 
-### Clonar el repositorio
+### Clone the repository
 
 ```bash
 git clone https://github.com/brookk525/python-chess-engine.git
 cd python-chess-engine
 ```
 
-### Crear el entorno virtual
+### Create the virtual environment
 
 ```bash
 python3.13 -m venv .venv
 ```
 
-En macOS o Linux:
+On macOS or Linux:
 
 ```bash
 source .venv/bin/activate
 ```
 
-En Windows:
+On Windows:
 
 ```powershell
 .venv\Scripts\activate
 ```
 
-### Instalar dependencias de desarrollo
+### Install development dependencies
 
 ```bash
 python -m pip install -r requirements-dev.txt
 ```
 
-El motor no necesita dependencias externas durante su ejecución. `pytest` se utiliza únicamente para ejecutar los tests.
+The engine does not require external dependencies at runtime. `pytest` is used only to run the tests.
 
-## ✅ Ejecutar los tests
+## ✅ Run the tests
 
 ```bash
 python -m pytest
 ```
 
-Resultado actual:
+Current result:
 
 ```text
 61 passed
 ```
 
-## ⚠️ Limitaciones actuales
+## ⚠️ Current limitations
 
-Esta versión está centrada en el núcleo de reglas y todavía no implementa:
+This version focuses on the core rules and does not yet implement:
 
-- Captura al paso.
-- Tablas por triple repetición.
-- Regla de los 50 movimientos.
-- Tablas por material insuficiente.
-- Finalización automática de la partida mediante `MatchState.FINISHED`.
-- Notación algebraica.
-- Importación o exportación FEN/PGN.
-- Interfaz gráfica.
-- Juego contra inteligencia artificial.
-- Multijugador por red.
+- En passant captures.
+- Draw by threefold repetition.
+- The fifty-move rule.
+- Draw by insufficient material.
+- Automatic match completion through `MatchState.FINISHED`.
+- Algebraic notation.
+- FEN/PGN import or export.
+- Graphical interface.
+- Play against artificial intelligence.
+- Network multiplayer.
 
-Estas limitaciones forman parte del alcance actual y están previstas como posibles mejoras futuras.
+These limitations are part of the current scope and are planned as possible future improvements.
 
-## 🗺️ Posibles mejoras
+## 🗺️ Possible improvements
 
-- Implementar captura al paso.
-- Completar las reglas oficiales de tablas.
-- Añadir historial de movimientos.
-- Incorporar notación algebraica.
-- Crear una API pública más cómoda para consumir el motor.
-- Empaquetar el proyecto como librería instalable.
-- Añadir integración continua para ejecutar los tests automáticamente.
+- Implement en passant captures.
+- Complete the official draw rules.
+- Add move history.
+- Add algebraic notation.
+- Create a more convenient public API for using the engine.
+- Package the project as an installable library.
+- Add continuous integration to run the tests automatically.
 
-## 🤖 Herramientas de apoyo
+## 🤖 Supporting tools
 
-El diseño del modelo, la implementación de las reglas y los algoritmos principales fueron desarrollados por el autor.
+The model design, rule implementation, and main algorithms were developed by the author.
 
-Durante el proyecto se utilizaron herramientas de inteligencia artificial como apoyo para generar un esqueleto inicial a partir de un diseño de clases previo, ampliar casos de prueba y revisar casos límite.
+During the project, artificial intelligence tools were used as support to generate an initial skeleton from a previous class design, expand test cases, and review edge cases.
 
-El uso de estas herramientas se realizó como apoyo al proceso de aprendizaje, manteniendo la comprensión y autoría sobre la arquitectura y el funcionamiento del motor.
+These tools were used to support the learning process while preserving the author's understanding and ownership of the engine's architecture and behavior.
 
-## 📚 Aprendizajes
+## 📚 What I learned
 
-Este proyecto me permitió trabajar especialmente:
+This project gave me practical experience with:
 
-- Diseño orientado a objetos.
-- Herencia, abstracción y polimorfismo.
-- Separación de responsabilidades.
-- Modelado de reglas de negocio.
-- Algoritmos aplicados a un tablero bidimensional.
-- Simulación de estados.
-- Prevención de efectos secundarios.
-- Testing automatizado.
-- Depuración de casos límite.
-- Uso de Git mediante ramas y commits pequeños.
+- Object-oriented design.
+- Inheritance, abstraction, and polymorphism.
+- Separation of responsibilities.
+- Business rule modeling.
+- Algorithms applied to a two-dimensional board.
+- State simulation.
+- Prevention of side effects.
+- Automated testing.
+- Debugging edge cases.
+- Using Git with branches and small commits.
 
-## 📜 Licencia
+## 📜 License
 
-Este proyecto se distribuye bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para obtener más información.
+This project is distributed under the MIT License. See the [LICENSE](LICENSE) file for more information.
 
-## 👤 Autor
+## 👤 Author
 
 **Brooklyn Muñoz Acevedo**
 
-Estudiante de Desarrollo de Aplicaciones Web.
+Web Application Development student.
